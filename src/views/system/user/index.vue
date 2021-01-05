@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--部门数据-->
-      <el-col :span="4" :xs="24">
+      <!-- <el-col :span="4" :xs="24">
         <div class="head-container">
           <el-input
             v-model="deptName"
@@ -24,9 +24,9 @@
             @node-click="handleNodeClick"
           />
         </div>
-      </el-col>
+      </el-col>-->
       <!--用户数据-->
-      <el-col :span="20" :xs="24">
+      <el-col :span="24" :xs="24">
         <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
           <el-form-item label="用户名称" prop="userName">
             <el-input
@@ -270,7 +270,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="岗位">
               <el-select v-model="form.postIds" multiple placeholder="请选择">
                 <el-option
@@ -282,7 +282,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="角色">
               <el-select v-model="form.roleIds" multiple placeholder="请选择">
@@ -393,7 +393,7 @@ export default {
       // 性别状态字典
       sexOptions: [],
       // 岗位选项
-      postOptions: [],
+      // postOptions: [],
       // 角色选项
       roleOptions: [],
       // 表单参数
@@ -544,7 +544,7 @@ export default {
         sex: undefined,
         status: "0",
         remark: undefined,
-        postIds: [],
+        // postIds: [],
         roleIds: [],
       };
       this.resetForm("form");
@@ -571,7 +571,7 @@ export default {
       this.reset();
       this.getTreeselect();
       getUser().then((response) => {
-        this.postOptions = response.posts;
+        // this.postOptions = response.posts;
         this.roleOptions = response.roles;
         this.open = true;
         this.title = "添加用户";
@@ -585,9 +585,9 @@ export default {
       const userId = row.userId || this.ids;
       getUser(userId).then((response) => {
         this.form = response.data;
-        this.postOptions = response.posts;
+        // this.postOptions = response.posts;
         this.roleOptions = response.roles;
-        this.form.postIds = response.postIds;
+        // this.form.postIds = response.postIds;
         this.form.roleIds = response.roleIds;
         this.open = true;
         this.title = "修改用户";

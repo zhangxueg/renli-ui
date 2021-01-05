@@ -92,19 +92,19 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/gen',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'edit',
-        component: () => import('@/views/tool/gen/editTable'),
-        name: 'GenEdit',
-        meta: { title: '修改生成配置' }
-      }
-    ]
-  }
+  // {
+  //   path: '/gen',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'edit',
+  //       component: () => import('@/views/tool/gen/editTable'),
+  //       name: 'GenEdit',
+  //       meta: { title: '修改生成配置' }
+  //     }
+  //   ]
+  // }
 ]
 
 export default new Router({

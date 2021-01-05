@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态">
+      <!-- <el-form-item label="状态">
         <el-select v-model="queryParams.visible" placeholder="菜单状态" clearable size="small">
           <el-option
             v-for="dict in visibleOptions"
@@ -19,10 +19,16 @@
             :value="dict.dictValue"
           />
         </el-select>
-      </el-form-item>
+      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['system:menu:add']">新增</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['system:menu:add']"
+        >新增</el-button>
       </el-form-item>
     </el-form>
 
@@ -32,33 +38,34 @@
       row-key="menuId"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="130px"></el-table-column>
-      <el-table-column prop="icon" label="图标" align="center" width="100px">
+      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="200px"></el-table-column>
+      <!-- <el-table-column prop="icon" label="图标" align="center" width="100px">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
-      </el-table-column>
-      <el-table-column prop="orderNum" label="排序" width="60px"></el-table-column>
-      <el-table-column prop="perms" label="权限标识" width="130px" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="component" label="组件路径" width="180px" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="visible" label="可见" :formatter="visibleFormat" width="80px"></el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      </el-table-column>-->
+      <el-table-column prop="orderNum" label="排序" width="100px"></el-table-column>
+      <el-table-column prop="perms" label="权限标识" width="150px" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="component" label="组件路径" width="200px" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="visible" label="可见" :formatter="visibleFormat" width="100px"></el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="250">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="700" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" 
-            type="text" 
-            icon="el-icon-edit" 
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:menu:edit']"
           >修改</el-button>
-          <el-button 
-            size="mini" 
-            type="text" 
-            icon="el-icon-plus" 
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['system:menu:add']"
           >新增</el-button>
@@ -173,7 +180,14 @@
 </template>
 
 <script>
-import { listMenu, getMenu, treeselect, delMenu, addMenu, updateMenu } from "@/api/system/menu";
+import {
+  listMenu,
+  getMenu,
+  treeselect,
+  delMenu,
+  addMenu,
+  updateMenu,
+} from "@/api/system/menu";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import IconSelect from "@/components/IconSelect";
@@ -198,24 +212,24 @@ export default {
       // 查询参数
       queryParams: {
         menuName: undefined,
-        visible: undefined
+        visible: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         menuName: [
-          { required: true, message: "菜单名称不能为空", trigger: "blur" }
+          { required: true, message: "菜单名称不能为空", trigger: "blur" },
         ],
         orderNum: [
-          { required: true, message: "菜单顺序不能为空", trigger: "blur" }
-        ]
-      }
+          { required: true, message: "菜单顺序不能为空", trigger: "blur" },
+        ],
+      },
     };
   },
   created() {
     this.getList();
-    this.getDicts("sys_show_hide").then(response => {
+    this.getDicts("sys_show_hide").then((response) => {
       this.visibleOptions = response.data;
     });
   },
@@ -227,16 +241,16 @@ export default {
     /** 查询菜单列表 */
     getList() {
       this.loading = true;
-      listMenu(this.queryParams).then(response => {
+      listMenu(this.queryParams).then((response) => {
         this.menuList = response.data;
         this.loading = false;
       });
     },
     /** 查询菜单下拉树结构 */
     getTreeselect() {
-      treeselect().then(response => {
+      treeselect().then((response) => {
         this.menuOptions = [];
-        const menu = { id: 0, label: '主类目', children: [] };
+        const menu = { id: 0, label: "主类目", children: [] };
         menu.children = response.data;
         this.menuOptions.push(menu);
       });
@@ -263,7 +277,7 @@ export default {
         menuType: "M",
         orderNum: undefined,
         isFrame: "1",
-        visible: "0"
+        visible: "0",
       };
       this.resetForm("form");
     },
@@ -285,18 +299,18 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      getMenu(row.menuId).then(response => {
+      getMenu(row.menuId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改菜单";
       });
     },
     /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.menuId != undefined) {
-            updateMenu(this.form).then(response => {
+            updateMenu(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
                 this.open = false;
@@ -306,7 +320,7 @@ export default {
               }
             });
           } else {
-            addMenu(this.form).then(response => {
+            addMenu(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("新增成功");
                 this.open = false;
@@ -321,17 +335,24 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$confirm('是否确认删除名称为"' + row.menuName + '"的数据项?', "警告", {
+      this.$confirm(
+        '是否确认删除名称为"' + row.menuName + '"的数据项?',
+        "警告",
+        {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+          type: "warning",
+        }
+      )
+        .then(function () {
           return delMenu(row.menuId);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        }).catch(function() {});
-    }
-  }
+        })
+        .catch(function () {});
+    },
+  },
 };
 </script>
