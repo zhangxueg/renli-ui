@@ -202,7 +202,7 @@
         <el-form-item label="权限字符">
           <el-input v-model="form.roleKey" :disabled="true" />
         </el-form-item>
-        <el-form-item label="权限范围">
+        <!-- <el-form-item label="权限范围">
           <el-select v-model="form.dataScope">
             <el-option
               v-for="item in dataScopeOptions"
@@ -222,7 +222,7 @@
             empty-text="加载中，请稍后"
             :props="defaultProps"
           ></el-tree>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitDataScope">确 定</el-button>
@@ -247,10 +247,10 @@ import {
   treeselect as menuTreeselect,
   roleMenuTreeselect,
 } from "@/api/system/menu";
-import {
-  treeselect as deptTreeselect,
-  roleDeptTreeselect,
-} from "@/api/system/dept";
+// import {
+//   treeselect as deptTreeselect,
+//   roleDeptTreeselect,
+// } from "@/api/system/dept";
 
 export default {
   name: "Role",
@@ -304,7 +304,7 @@ export default {
       // 菜单列表
       menuOptions: [],
       // 部门列表
-      deptOptions: [],
+      // deptOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -358,11 +358,11 @@ export default {
       });
     },
     /** 查询部门树结构 */
-    getDeptTreeselect() {
-      deptTreeselect().then((response) => {
-        this.deptOptions = response.data;
-      });
-    },
+    // getDeptTreeselect() {
+    //   deptTreeselect().then((response) => {
+    //     this.deptOptions = response.data;
+    //   });
+    // },
     // 所有菜单节点数据
     getMenuAllCheckedKeys() {
       // 目前被选中的菜单节点
@@ -373,14 +373,14 @@ export default {
       return checkedKeys;
     },
     // 所有部门节点数据
-    getDeptAllCheckedKeys() {
-      // 目前被选中的部门节点
-      let checkedKeys = this.$refs.dept.getHalfCheckedKeys();
-      // 半选中的部门节点
-      let halfCheckedKeys = this.$refs.dept.getCheckedKeys();
-      checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys);
-      return checkedKeys;
-    },
+    // getDeptAllCheckedKeys() {
+    //   // 目前被选中的部门节点
+    //   let checkedKeys = this.$refs.dept.getHalfCheckedKeys();
+    //   // 半选中的部门节点
+    //   let halfCheckedKeys = this.$refs.dept.getCheckedKeys();
+    //   checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys);
+    //   return checkedKeys;
+    // },
     /** 根据角色ID查询菜单树结构 */
     getRoleMenuTreeselect(roleId) {
       roleMenuTreeselect(roleId).then((response) => {
@@ -389,12 +389,12 @@ export default {
       });
     },
     /** 根据角色ID查询部门树结构 */
-    getRoleDeptTreeselect(roleId) {
-      roleDeptTreeselect(roleId).then((response) => {
-        this.deptOptions = response.depts;
-        this.$refs.dept.setCheckedKeys(response.checkedKeys);
-      });
-    },
+    // getRoleDeptTreeselect(roleId) {
+    //   roleDeptTreeselect(roleId).then((response) => {
+    //     this.deptOptions = response.depts;
+    //     this.$refs.dept.setCheckedKeys(response.checkedKeys);
+    //   });
+    // },
     // 角色状态修改
     handleStatusChange(row) {
       let text = row.status === "0" ? "启用" : "停用";
@@ -439,7 +439,7 @@ export default {
         roleSort: 0,
         status: "0",
         menuIds: [],
-        deptIds: [],
+        // deptIds: [],
         remark: undefined,
       };
       this.resetForm("form");
@@ -484,9 +484,9 @@ export default {
     /** 分配数据权限操作 */
     handleDataScope(row) {
       this.reset();
-      this.$nextTick(() => {
-        this.getRoleDeptTreeselect(row.roleId);
-      });
+      // this.$nextTick(() => {
+      //   this.getRoleDeptTreeselect(row.roleId);
+      // });
       getRole(row.roleId).then((response) => {
         this.form = response.data;
         this.openDataScope = true;
@@ -526,7 +526,7 @@ export default {
     /** 提交按钮（数据权限） */
     submitDataScope: function () {
       if (this.form.roleId != undefined) {
-        this.form.deptIds = this.getDeptAllCheckedKeys();
+        // this.form.deptIds = this.getDeptAllCheckedKeys();
         dataScope(this.form).then((response) => {
           if (response.code === 200) {
             this.msgSuccess("修改成功");

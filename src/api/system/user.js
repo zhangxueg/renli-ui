@@ -18,20 +18,20 @@ export function getUser(userId) {
   })
 }
 // 查询用户下拉树结构
-export function treeselect() {
-  return request({
-    url: '/system/dept/treeselect',
-    method: 'get'
-  })
-}
+// export function treeselect() {
+//   return request({
+//     url: '/system/dept/treeselect',
+//     method: 'get'
+//   })
+// }
 
 // 根据角色ID查询部门树结构
-export function roleDeptTreeselect(roleId) {
-  return request({
-    url: '/system/dept/roleDeptTreeselect/' + roleId,
-    method: 'get'
-  })
-}
+// export function roleDeptTreeselect(roleId) {
+//   return request({
+//     url: '/system/dept/roleDeptTreeselect/' + roleId,
+//     method: 'get'
+//   })
+// }
 // 新增用户
 export function addUser(data) {
   return request({

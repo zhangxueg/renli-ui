@@ -147,12 +147,12 @@
             prop="nickName"
             :show-overflow-tooltip="true"
           />
-          <el-table-column
+          <!-- <el-table-column
             label="部门"
             align="center"
             prop="dept.deptName"
             :show-overflow-tooltip="true"
-          />
+          />-->
           <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
@@ -221,11 +221,11 @@
               <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="归属部门" prop="deptId">
               <treeselect v-model="form.deptId" :options="deptOptions" placeholder="请选择归属部门" />
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="手机号码" prop="phonenumber">
               <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
@@ -355,7 +355,7 @@ import {
   importTemplate,
 } from "@/api/system/user";
 import { getToken } from "@/utils/auth";
-import { treeselect } from "@/api/system/dept";
+// import { treeselect } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -379,11 +379,11 @@ export default {
       // 弹出层标题
       title: "",
       // 部门树选项
-      deptOptions: undefined,
+      // deptOptions: undefined,
       // 是否显示弹出层
       open: false,
       // 部门名称
-      deptName: undefined,
+      // deptName: undefined,
       // 默认密码
       initPassword: undefined,
       // 日期范围
@@ -424,7 +424,7 @@ export default {
         userName: undefined,
         phonenumber: undefined,
         status: undefined,
-        deptId: undefined,
+        // deptId: undefined,
       },
       // 表单校验
       rules: {
@@ -434,9 +434,9 @@ export default {
         nickName: [
           { required: true, message: "用户昵称不能为空", trigger: "blur" },
         ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
-        ],
+        // deptId: [
+        //   { required: true, message: "归属部门不能为空", trigger: "blur" },
+        // ],
         password: [
           { required: true, message: "用户密码不能为空", trigger: "blur" },
         ],
@@ -459,9 +459,9 @@ export default {
   },
   watch: {
     // 根据名称筛选部门树
-    deptName(val) {
-      this.$refs.tree.filter(val);
-    },
+    // deptName(val) {
+    //   this.$refs.tree.filter(val);
+    // },
   },
   created() {
     this.getList();
@@ -489,11 +489,11 @@ export default {
       );
     },
     /** 查询部门下拉树结构 */
-    getTreeselect() {
-      treeselect().then((response) => {
-        this.deptOptions = response.data;
-      });
-    },
+    // getTreeselect() {
+    //   treeselect().then((response) => {
+    //     this.deptOptions = response.data;
+    //   });
+    // },
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
@@ -501,7 +501,7 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
+      // this.queryParams.deptId = data.id;
       this.getList();
     },
     // 用户状态修改
@@ -535,7 +535,7 @@ export default {
     reset() {
       this.form = {
         userId: undefined,
-        deptId: undefined,
+        // deptId: undefined,
         userName: undefined,
         nickName: undefined,
         password: undefined,
